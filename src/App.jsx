@@ -19,7 +19,6 @@ export const App = () => {
   const [value, selectedGood] = useState('Jam');
   const [classValue, setClassName] = useState('');
   const [message, setMessage] = useState(`${value} is selected`);
-
   const [clearButton, setClearButton] = useState(
     <button data-cy="ClearButton" type="button" className="delete ml-3" />,
   );
@@ -54,11 +53,11 @@ export const App = () => {
                       : `button ${buttonClassName}`
                   }
                   onClick={() => {
-                    selectedGood(good);
+                    selectedGood('');
                     setClassName('');
-                    setClearSign('-');
-                    setButtonName('RemoveButton');
-                    setButtonClassName('is-info');
+                    setClearSign(sign);
+                    setButtonName(buttonName);
+                    setButtonClassName(buttonClassName);
 
                     setMessage('No goods selected');
                     setClearButton('');
