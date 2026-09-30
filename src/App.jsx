@@ -16,33 +16,44 @@ export const goods = [
 ];
 
 export const App = () => {
-  // const [value, selectedGood] = useState('Jam');
-  const [message, setMessage] = useState('No goods selected');
+  const [value, selectedGood] = useState('Jam');
+  const [classValue, setClassName] = useState('has-background-success-light');
+  const [message, setMessage] = useState(`${value} is selected`);
+
+  const [clearButton, setClearButton] = useState(
+    <button data-cy="ClearButton" type="button" className="delete ml-3" />,
+  );
+  const [sign, setClearSign] = useState('-');
+  const [buttonName, setButtonName] = useState('RemoveButton');
+  const [buttonClassName, setButtonClassName] = useState('is-info');
 
   return (
     <main className="section container">
-      <h1 className="title is-flex is-align-items-center">{message}</h1>
-
-      {/* <h1 className="title is-flex is-align-items-center">
-        {value} is selected
-        <button data-cy="ClearButton" type="button" className="delete ml-3" />
-      </h1> */}
+      <h1 className="title is-flex is-align-items-center">
+        {message}
+        {clearButton}
+      </h1>
 
       <table className="table">
         <tbody>
           {goods.map(good => (
-            <tr data-cy="Good">
+            <tr data-cy="Good" key={good} className={classValue}>
               <td>
                 <button
-                  data-cy="AddButton"
+                  data-cy={buttonName}
                   type="button"
-                  className="button"
+                  className={`button ${buttonClassName}`}
                   onClick={() => {
-                    // <tr className="has-background-success-light"></tr>
-                    setMessage(`${good} is selected`);
+                    selectedGood('');
+                    setClassName('');
+                    setClearSign('+');
+                    setButtonName('AddButton');
+                    setButtonClassName('');
+                    setMessage('No goods selected');
+                    setClearButton('');
                   }}
                 >
-                  +
+                  {sign}
                 </button>
               </td>
 
@@ -51,22 +62,6 @@ export const App = () => {
               </td>
             </tr>
           ))}
-
-          {/* <tr data-cy="Good" className="has-background-success-light">
-            <td>
-              <button
-                data-cy="RemoveButton"
-                type="button"
-                className="button is-info"
-              >
-                -
-              </button>
-            </td>
-
-            <td data-cy="GoodTitle" className="is-vcentered">
-              Jam
-            </td>
-          </tr> */}
         </tbody>
       </table>
     </main>
