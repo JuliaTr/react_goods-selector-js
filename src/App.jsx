@@ -17,15 +17,15 @@ export const goods = [
 
 export const App = () => {
   const [value, selectedGood] = useState('Jam');
-  const [classValue, setClassName] = useState('has-background-success-light');
+  const [classValue, setClassName] = useState('');
   const [message, setMessage] = useState(`${value} is selected`);
 
   const [clearButton, setClearButton] = useState(
     <button data-cy="ClearButton" type="button" className="delete ml-3" />,
   );
-  const [sign, setClearSign] = useState('-');
-  const [buttonName, setButtonName] = useState('RemoveButton');
-  const [buttonClassName, setButtonClassName] = useState('is-info');
+  const [sign, setClearSign] = useState('+');
+  const [buttonName, setButtonName] = useState('AddButton');
+  const [buttonClassName, setButtonClassName] = useState('');
 
   return (
     <main className="section container">
@@ -37,23 +37,34 @@ export const App = () => {
       <table className="table">
         <tbody>
           {goods.map(good => (
-            <tr data-cy="Good" key={good} className={classValue}>
+            <tr
+              data-cy="Good"
+              key={good}
+              className={
+                good === value ? 'has-background-success-light' : classValue
+              }
+            >
               <td>
                 <button
-                  data-cy={buttonName}
+                  data-cy={good === value ? 'RemoveButton' : buttonName}
                   type="button"
-                  className={`button ${buttonClassName}`}
+                  className={
+                    good === value
+                      ? 'button is-info'
+                      : `button ${buttonClassName}`
+                  }
                   onClick={() => {
-                    selectedGood('');
+                    selectedGood(good);
                     setClassName('');
-                    setClearSign('+');
-                    setButtonName('AddButton');
-                    setButtonClassName('');
+                    setClearSign('-');
+                    setButtonName('RemoveButton');
+                    setButtonClassName('is-info');
+
                     setMessage('No goods selected');
                     setClearButton('');
                   }}
                 >
-                  {sign}
+                  {good === value ? '-' : sign}
                 </button>
               </td>
 
