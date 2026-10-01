@@ -16,7 +16,7 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [value, selectedGood] = useState('Jam');
+  const [value, setSelectedGood] = useState('Jam');
   const [classValue, setClassName] = useState('');
   const [message, setMessage] = useState(`${value} is selected`);
   const [clearButton, setClearButton] = useState(
@@ -53,15 +53,19 @@ export const App = () => {
                       : `button ${buttonClassName}`
                   }
                   onClick={() => {
-                    selectedGood(good);
-                    setMessage('No goods selected');
-
-                    setClassName('');
-                    setClearSign(sign);
-                    setButtonName(buttonName);
-                    setButtonClassName(buttonClassName);
-
-                    setClearButton('');
+                    if (good === value) {
+                      setSelectedGood('');
+                      setMessage('No goods selected');
+                      setClearButton('');
+                      setClassName('');
+                      setClearSign(sign);
+                      setButtonName(buttonName);
+                      setButtonClassName(buttonClassName);
+                    } else {
+                      setSelectedGood(good);
+                      setMessage(`${good} is selected`);
+                      setClearButton(clearButton);
+                    }
                   }}
                 >
                   {good === value ? '-' : sign}
