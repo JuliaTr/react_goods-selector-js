@@ -17,77 +17,56 @@ export const goods = [
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
-  const [classValue, setClassName] = useState('');
-  const [message, setMessage] = useState(`${selectedGood} is selected`);
-  const [clearButton, setClearButton] = useState(
-    <button
-      data-cy="ClearButton"
-      type="button"
-      className="delete ml-3"
-      onClick={() => {
-        setSelectedGood('');
-        setMessage('No goods selected');
-        setClearButton('');
-      }}
-    />,
-  );
-  const [sign, setClearSign] = useState('+');
-  const [buttonName, setButtonName] = useState('AddButton');
-  const [buttonClassName, setButtonClassName] = useState('');
 
   return (
     <main className="section container">
       <h1 className="title is-flex is-align-items-center">
-        {message}
-        {clearButton}
+        {selectedGood ? `${selectedGood} is selected` : 'No goods selected'}
+
+        {selectedGood && (
+          <button
+            data-cy="ClearButton"
+            type="button"
+            className="delete ml-3"
+            onClick={() => setSelectedGood('')}
+          />
+        )}
       </h1>
 
       <table className="table">
         <tbody>
-          {goods.map(good => (
-            <tr
-              data-cy="Good"
-              key={good}
-              className={
-                good === selectedGood
-                  ? 'has-background-success-light'
-                  : classValue
-              }
-            >
-              <td>
-                <button
-                  data-cy={good === selectedGood ? 'RemoveButton' : buttonName}
-                  type="button"
-                  className={
-                    good === selectedGood
-                      ? 'button is-info'
-                      : `button ${buttonClassName}`
-                  }
-                  onClick={() => {
-                    if (good === selectedGood) {
-                      setSelectedGood('');
-                      setMessage('No goods selected');
-                      setClearButton('');
-                      setClassName('');
-                      setClearSign(sign);
-                      setButtonName(buttonName);
-                      setButtonClassName(buttonClassName);
-                    } else {
-                      setSelectedGood(good);
-                      setMessage(`${good} is selected`);
-                      setClearButton(clearButton);
-                    }
-                  }}
-                >
-                  {good === selectedGood ? '-' : sign}
-                </button>
-              </td>
+          {goods.map(good => {
+            const isSelected = good === selectedGood;
 
-              <td data-cy="GoodTitle" className="is-vcentered">
-                {good}
-              </td>
-            </tr>
-          ))}
+            return (
+              <tr
+                data-cy="Good"
+                key={good}
+                className={isSelected ? 'has-background-success-light' : ''}
+              >
+                <td>
+                  <button
+                    data-cy={isSelected ? 'RemoveButton' : 'AddButton'}
+                    type="button"
+                    className={isSelected ? 'button is-info' : 'button'}
+                    onClick={() => {
+                      if (isSelected) {
+                        setSelectedGood('');
+                      } else {
+                        setSelectedGood(good);
+                      }
+                    }}
+                  >
+                    {isSelected ? '-' : '+'}
+                  </button>
+                </td>
+
+                <td data-cy="GoodTitle" className="is-vcentered">
+                  {good}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </main>
