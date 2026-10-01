@@ -53,13 +53,14 @@ export const App = () => {
                       : `button ${buttonClassName}`
                   }
                   onClick={() => {
-                    selectedGood('');
+                    selectedGood(good);
+                    setMessage('No goods selected');
+
                     setClassName('');
                     setClearSign(sign);
                     setButtonName(buttonName);
                     setButtonClassName(buttonClassName);
 
-                    setMessage('No goods selected');
                     setClearButton('');
                   }}
                 >
