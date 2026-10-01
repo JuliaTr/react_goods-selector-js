@@ -16,11 +16,20 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [value, setSelectedGood] = useState('Jam');
+  const [selectedGood, setSelectedGood] = useState('Jam');
   const [classValue, setClassName] = useState('');
-  const [message, setMessage] = useState(`${value} is selected`);
+  const [message, setMessage] = useState(`${selectedGood} is selected`);
   const [clearButton, setClearButton] = useState(
-    <button data-cy="ClearButton" type="button" className="delete ml-3" />,
+    <button
+      data-cy="ClearButton"
+      type="button"
+      className="delete ml-3"
+      onClick={() => {
+        setSelectedGood('');
+        setMessage('No goods selected');
+        setClearButton('');
+      }}
+    />,
   );
   const [sign, setClearSign] = useState('+');
   const [buttonName, setButtonName] = useState('AddButton');
@@ -40,20 +49,22 @@ export const App = () => {
               data-cy="Good"
               key={good}
               className={
-                good === value ? 'has-background-success-light' : classValue
+                good === selectedGood
+                  ? 'has-background-success-light'
+                  : classValue
               }
             >
               <td>
                 <button
-                  data-cy={good === value ? 'RemoveButton' : buttonName}
+                  data-cy={good === selectedGood ? 'RemoveButton' : buttonName}
                   type="button"
                   className={
-                    good === value
+                    good === selectedGood
                       ? 'button is-info'
                       : `button ${buttonClassName}`
                   }
                   onClick={() => {
-                    if (good === value) {
+                    if (good === selectedGood) {
                       setSelectedGood('');
                       setMessage('No goods selected');
                       setClearButton('');
@@ -68,7 +79,7 @@ export const App = () => {
                     }
                   }}
                 >
-                  {good === value ? '-' : sign}
+                  {good === selectedGood ? '-' : sign}
                 </button>
               </td>
 
